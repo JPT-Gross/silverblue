@@ -45,8 +45,9 @@ body {
 }
 
 .content {
-        width: 300px;
-        margin: auto;        
+    text-align: center;
+    width: 300px;
+    margin: auto;        
 }
 
 /* Responsive layout - makes the three columns stack on top of each other
@@ -66,11 +67,13 @@ instead of next to each other */
 
 <div class="row">
     <div class="column" style="background-color:#aaa;">Today is an
-        <div class="content">A day
+        <div class="content">
+            <p id=day></p>
         </div>
     </div>
     <div class="column" style="background-color:#bbb;">The current class is
-        <div class="content">1st Period
+        <div class="content">
+            <p id=period></p>
         </div>
     </div>
 </div>
@@ -80,9 +83,12 @@ instead of next to each other */
 </div>
 
 <script>
-    const dayColor = ["Silver", "Blue", "Purple"];
+    const dayColor = ["A Day", "B Day", "AB Day"];
     const classPeriod = ["Period 1", "Period 2", "Period 3", "Period 4"];
     const lunch = ["A Lunch", "B Lunch"];
+
+    document.getElementById("day").innerHTML = dayColor[0];
+    document.getElementById("period").innerHTML =classPeriod[0];
 </script>
 </body>
 </html>
