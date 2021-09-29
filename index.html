@@ -66,7 +66,7 @@ instead of next to each other */
 </div>
 
 <div class="row">
-    <div class="column" style="background-color:#aaa;">Today is an
+    <div class="column" style="background-color:#aaa;">Today is a(n)
         <div class="content">
             <p id=day></p>
         </div>
@@ -83,12 +83,46 @@ instead of next to each other */
 </div>
 
 <script>
-    const dayColor = ["A Day", "B Day", "AB Day"];
-    const classPeriod = ["Period 1", "Period 2", "Period 3", "Period 4"];
+    const dayColor = ["A<br>Day", "B<br>Day", "AB Day"];
+    const classPeriod = ["1st<br>Period", "Period 2", "Period 3", "Period 4"];
     const lunch = ["A Lunch", "B Lunch"];
-    const day = [0, 1, 1, 1, 2];
 
-    document.getElementById("day").innerHTML = dayColor[day[4]];
+    //Get current day
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    //Days since the first day of school
+    var date1 = new Date("08/16/2021");
+    var date2 = new Date(today);
+
+    //Calculate the time difference of the two dates
+    var differenceInTime = date2.getTime() - date1.getTime();
+    
+    // To calculate the no. of days between two dates
+    var differenceInDays = Math.trunc(differenceInTime / (1000 * 3600 * 24));
+
+    var aOrB = differenceInDays;
+
+    if (aOrB > 2) {
+        //Replace content with "No School" message
+    };
+
+    // This is an array of the school year where day[0] is the first day of
+    // school (8/16//21).
+    const calendar = 
+        [2,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,4,4,0,1,0,6,6,1,0,1,4,0,6,6,1,0,
+        1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,4,1,0,6,6,1,0,1,
+        0,1,6,6,0,1,0,1,0,6,6,1,0,1,4,0,6,6,1,0,1,0,1,6,6,5,5,5,5,5,6,6,0,1,0,1,
+        0,6,6,1,0,1,0,1,6,6,0,3,3,3,3,6,6,7,7,7,7,7,7,7,7,7,7,7,7,6,6,1,0,1,0,1,
+        6,6,0,4,1,0,1,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,
+        6,1,0,1,0,1,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,4,6,6,
+        8,8,8,8,8,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,4,6,6,1,0,1,0,1,6,6,0,
+        1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,4,1,
+        0,1,0,6,6,3,3,3,3];
+
+    document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
     document.getElementById("period").innerHTML = classPeriod[0];
 </script>
 </body>
