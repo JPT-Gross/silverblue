@@ -80,11 +80,11 @@ instead of next to each other */
     </div>
 </div>
 
-<!--
+
 <div class="footer">
-    <p>Footer</p>
+    <p id=debug>Footer</p>
 </div>
--->
+
 
 <script>
     const dayColor = 
@@ -103,6 +103,7 @@ instead of next to each other */
     var isEarlyRelease = false;
     var isPSD = false;
 
+    var updatePage = function() {
     // This is an array of the school year where day[0] is the first day of
     // school (8/18//21).
     const calendar = 
@@ -119,7 +120,7 @@ instead of next to each other */
     //Get current day
     var today = new Date();
 
-    //get the current minutes since midnight
+    //Get the current minutes since midnight
     var minsToday = ((today.getMinutes()) + (today.getHours()) * 60);
 
     //Days since the first day of school
@@ -129,19 +130,21 @@ instead of next to each other */
     //Calculate the time difference of the two dates
     var differenceInTime = date2.getTime() - date1.getTime();
     
-    // To calculate the no. of days between two dates
+    // Calculate the no. of days between two dates
     var differenceInDays = Math.trunc(differenceInTime / (1000 * 3600 * 24));
 
     var aOrB = differenceInDays;
 
+    //Display current day
     document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
 
+    //Bell schedule (in minutes)
     if (isEarlyRelease){
         //Early Release Schedule
     } else if (isPSD){
         //PSD Schedule
     }
-    else{
+    else {
         if (minsToday < 460){
             currentPeriod = 0;
         } else if (minsToday < 556){
@@ -157,21 +160,25 @@ instead of next to each other */
         }
     }
 
-    if (calendar[aOrB] > 0) {
+    //Change periods for A or B day
+    if (calendar[aOrB] < 1) {
+        document.getElementById("period").innerHTML = 
+            classPeriodA[currentPeriod];
+    } else if (calendar[aOrB] < 2) {
         document.getElementById("period").innerHTML = 
             classPeriodB[currentPeriod];
     } else {
-    document.getElementById("period").innerHTML = classPeriodA[currentPeriod];
-    }
-
-    if (calendar[aOrB] > 3) {
-    //Replace content with "No School" message
-    var content = dayColor[calendar[aOrB]];
-    document.getElementsByTagName('style')[0].innerHTML = 
-        "body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}";
-    document.getElementsByTagName('body')[0].innerHTML = "Enjoy your " + content;
+        //Replace content with "No School" message
+        var content = dayColor[calendar[aOrB]];
+        document.getElementsByTagName('style')[0].innerHTML = 
+            "body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}";
+        document.getElementsByTagName('body')[0].innerHTML = "Enjoy your " + content;
     };
-    
+
+    document.getElementById("debug").innerHTML = today;
+    };
+
+    window.setInterval(updatePage, 1000);
 </script>
 </body>
 </html>
