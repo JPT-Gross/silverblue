@@ -64,7 +64,9 @@ instead of next to each other */
 <body>
 
 <div class="header">
-    <h2>Welcome to Taravella!</h2>
+    <h2><img src="images/trojan.png" alt="Trojan logo" height="60"> Welcome to 
+        Taravella!
+        <img src="images/trojan.png" alt="Trojan logo" height="60"></h2>
 </div>
 
 <div class="row">
@@ -105,7 +107,7 @@ instead of next to each other */
 
     var updatePage = function() {
     // This is an array of the school year where day[0] is the first day of
-    // school (8/18//21).
+    // school (8-18-21).
     const calendar = 
         [2,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,4,4,0,1,0,6,6,1,0,1,4,0,6,6,1,0,
         1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,4,1,0,6,6,1,0,1,
@@ -138,7 +140,7 @@ instead of next to each other */
     //Display current day
     document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
 
-    //Bell schedule (in minutes)
+    //Bell schedule (in minutes since midnight)
     if (isEarlyRelease){
         //Early Release Schedule
     } else if (isPSD){
@@ -172,8 +174,9 @@ instead of next to each other */
         var content = dayColor[calendar[aOrB]];
         document.getElementsByTagName('style')[0].innerHTML = 
             "body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}";
-        document.getElementsByTagName('body')[0].innerHTML = "Enjoy your " + content;
-    };
+        document.getElementsByTagName('body')[0].innerHTML = 
+            "Enjoy your " + content;
+    }
 
     document.getElementById("debug").innerHTML = today;
     };
