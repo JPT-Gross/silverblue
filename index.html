@@ -18,7 +18,7 @@ body {
 /* Style the header */
 .header {
     color: #f1f1f1;
-    padding: 30px;
+    padding: 15px;
     text-align: center;
     font-size: 35px;
 }
@@ -65,8 +65,7 @@ instead of next to each other */
 
 <div class="header">
     <h2><img src="images/trojan.png" alt="Trojan logo" height="60"> Welcome to 
-        Taravella!
-        <img src="images/trojan.png" alt="Trojan logo" height="60"></h2>
+        Taravella!</h2>
 </div>
 
 <div class="row">
@@ -102,8 +101,8 @@ instead of next to each other */
         "8th<br>Period", "Good<br>Bye"];
     var currentPeriod = 0;
     const lunch = ["A Lunch", "B Lunch"];
-    var isEarlyRelease = false;
-    var isPSD = false;
+    const earlyRelease = [62, 145, 180, 211, 239, 295];
+    const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
 
     var updatePage = function() {
     // This is an array of the school year where day[0] is the first day of
@@ -140,11 +139,52 @@ instead of next to each other */
     //Display current day
     document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
 
+    //Is it an Early Release or PSD?
+    var isEarlyRelease = false;
+    var isPSD = false;
+    
+    for (let i = 0; i < earlyRelease.length; i++){
+        if (earlyRelease[i] == differenceInDays){
+            isEarlyRelease = true;
+        }
+    };
+
+    for (let i = 0; i < PSD.length; i++){
+        if (PSD[i] == differenceInDays){
+            isPSD = true;
+        }
+    };
+
     //Bell schedule (in minutes since midnight)
+    //TODO make this a loop 
     if (isEarlyRelease){
-        //Early Release Schedule
+        if (minsToday < 460){
+            currentPeriod = 0;
+        } else if (minsToday < 528){
+            currentPeriod = 1;
+        } else if (minsToday < 602){
+            currentPeriod = 2;
+        } else if (minsToday < 676){
+            currentPeriod = 3; 
+        } else if (minsToday < 750){
+            currentPeriod = 4;
+        } else {
+            currentPeriod = 5;
+        }
     } else if (isPSD){
-        //PSD Schedule
+        if (minsToday < 460){
+            currentPeriod = 0;
+        } else if (minsToday < 520){
+            currentPeriod = 1;
+        } else if (minsToday < 586){
+            currentPeriod = 2;
+        } else if (minsToday < 652){
+            currentPeriod = 3;
+        } else if (minsToday < 718){
+            currentPeriod = 4;
+        } else {
+            currentPeriod = 5;
+        }
     }
     else {
         if (minsToday < 460){
@@ -175,7 +215,7 @@ instead of next to each other */
         document.getElementsByTagName('style')[0].innerHTML = 
             "body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}";
         document.getElementsByTagName('body')[0].innerHTML = 
-            "Enjoy your " + content;
+            "Enjoy Your " + content;
     }
 
     document.getElementById("debug").innerHTML = today;
