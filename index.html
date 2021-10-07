@@ -52,7 +52,7 @@ body {
     margin: auto;        
 }
 
-/* Responsive layout - makes the three columns stack on top of each other
+/* Responsive layout - makes the two columns stack on top of each other
 instead of next to each other */
 @media (max-width: 600px) {
     .column {
@@ -89,10 +89,8 @@ instead of next to each other */
 
 <script>
     const dayColor = 
-    ["<b>A</b><br>Day", "<b>B</b><br>Day", 
-    "<b>A/B</b><br> Day", "Exam<br>Day", "Day Off", 
-    "Thanksgiving", "Weekend", "Winter Break", 
-    "Spring Break"];
+    ["<b>A</b><br>Day", "<b>B</b><br>Day", "<b>A/B</b><br> Day", "Exam<br>Day", 
+    "Day Off", "Thanksgiving", "Weekend", "Winter Break", "Spring Break"];
     const classPeriodA = 
         ["Good<br>Morning","1st<br>Period", "2nd<br>Period", "3rd<br>Period", 
         "4th<br>Period", "Good<br>Bye"];
@@ -103,6 +101,7 @@ instead of next to each other */
     const lunch = ["A Lunch", "B Lunch"];
     const earlyRelease = [62, 145, 180, 211, 239, 295];
     const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
+    const testing = [56];
 
     var updatePage = function() {
     // This is an array of the school year where day[0] is the first day of
@@ -142,6 +141,7 @@ instead of next to each other */
     //Is it an Early Release or PSD?
     var isEarlyRelease = false;
     var isPSD = false;
+    var isTesting = false;
     
     for (let i = 0; i < earlyRelease.length; i++){
         if (earlyRelease[i] == differenceInDays){
@@ -152,6 +152,12 @@ instead of next to each other */
     for (let i = 0; i < PSD.length; i++){
         if (PSD[i] == differenceInDays){
             isPSD = true;
+        }
+    };
+
+    for (let i = 0; i < testing.length; i++){
+        if (testing[i] == differenceInDays){
+            isTesting = true;
         }
     };
 
@@ -185,6 +191,20 @@ instead of next to each other */
         } else {
             currentPeriod = 5;
         }
+    } else if (isTesting){
+        if (minsToday < 460){
+            currentPeriod = 0;
+        } else if (minsToday < 475){
+            currentPeriod = 1;
+        } else if (minsToday < 715){
+            currentPeriod = 2;
+        } else if (minsToday < 790){
+            currentPeriod = 3;
+        } else if (minsToday < 835){
+            currentPeriod = 4;
+        } else {
+            currentPeriod = 5;
+        }        
     }
     else {
         if (minsToday < 460){
