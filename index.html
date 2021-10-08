@@ -93,10 +93,10 @@ instead of next to each other */
     "Day Off", "Thanksgiving", "Weekend", "Winter Break", "Spring Break"];
     const classPeriodA = 
         ["Good<br>Morning","1st<br>Period", "2nd<br>Period", "3rd<br>Period", 
-        "4th<br>Period", "Good<br>Bye"];
+        "4th<br>Period", "Good<br>Bye", "Study<br>Hall"];
     const classPeriodB = 
         ["Good<br>Morning", "5th<br>Period", "6th<br>Period", "7th<br>Period", 
-        "8th<br>Period", "Good<br>Bye"];
+        "8th<br>Period", "Good<br>Bye", "Study<br>Hall"];
     var currentPeriod = 0;
     const lunch = ["A Lunch", "B Lunch"];
     const earlyRelease = [62, 145, 180, 211, 239, 295];
@@ -197,10 +197,12 @@ instead of next to each other */
         } else if (minsToday < 475){
             currentPeriod = 1;
         } else if (minsToday < 715){
-            currentPeriod = 2;
+            currentPeriod = 6;
         } else if (minsToday < 790){
             currentPeriod = 3;
         } else if (minsToday < 835){
+            currentPeriod = 2;
+        } else if (minsToday < 880){
             currentPeriod = 4;
         } else {
             currentPeriod = 5;
