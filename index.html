@@ -100,17 +100,21 @@ instead of next to each other */
     var currentPeriod = 0;
     const lunch = ["A Lunch", "B Lunch"];
     const earlyRelease = [62, 145, 180, 211, 239, 295];
+    const earlyReleaseBell = [/*insert ERD bell schedule*/];
     const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
+    const PSDBell = [/*insert PSD bell schedule*/];
     const testing = [56];
+    const examReverse = [120,121];
+    const bell = [460, 556, 653, 783, 880];
 
     var updatePage = function() {
-    // This is an array of the school year where day[0] is the first day of
+    // This is an array of the school year where calendar[0] is the first day of
     // school (8-18-21).
     const calendar = 
         [2,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,4,4,0,1,0,6,6,1,0,1,4,0,6,6,1,0,
         1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,4,1,0,6,6,1,0,1,
         0,1,6,6,0,1,0,1,0,6,6,1,0,1,4,0,6,6,1,0,1,0,1,6,6,5,5,5,5,5,6,6,0,1,0,1,
-        0,6,6,1,0,1,0,1,6,6,0,3,3,3,3,6,6,7,7,7,7,7,7,7,7,7,7,7,7,6,6,1,0,1,0,1,
+        0,6,6,1,0,1,0,1,6,6,0,0,1,0,1,6,6,7,7,7,7,7,7,7,7,7,7,7,7,6,6,1,0,1,0,1,
         6,6,0,4,1,0,1,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,
         6,1,0,1,0,1,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,4,6,6,
         8,8,8,8,8,6,6,4,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,4,6,6,1,0,1,0,1,6,6,0,
@@ -138,28 +142,45 @@ instead of next to each other */
     //Display current day
     document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
 
-    //Is it an Early Release or PSD?
+    //Is it a special day?
     var isEarlyRelease = false;
     var isPSD = false;
     var isTesting = false;
+    var isExamReverse = false;
     
     for (let i = 0; i < earlyRelease.length; i++){
-        if (earlyRelease[i] == differenceInDays){
+        if (earlyRelease[i] == aOrB){
             isEarlyRelease = true;
         }
     };
 
     for (let i = 0; i < PSD.length; i++){
-        if (PSD[i] == differenceInDays){
+        if (PSD[i] == aOrB){
             isPSD = true;
         }
     };
 
     for (let i = 0; i < testing.length; i++){
-        if (testing[i] == differenceInDays){
+        if (testing[i] == aOrB){
             isTesting = true;
         }
     };
+
+    for (let i = 0; i < examReverse.length; i++){
+        if (examReverse[i] == aOrB){
+            isExamReverse = true;
+        }
+    };
+
+/* Enable this when I code in the bell schedule for PSD and ERD
+    for (let i = 0; i < bell.length; i++){
+        if(minsToday < bell[i]){
+            currentPeriod = i;
+        } else {
+            currentPeriod = 5;
+        }
+    }
+*/
 
     //Bell schedule (in minutes since midnight)
     //TODO make this a loop 
@@ -207,6 +228,20 @@ instead of next to each other */
         } else {
             currentPeriod = 5;
         }        
+    } else if (isExamReverse) {
+        if (minsToday < 460){
+            currentPeriod = 0;
+        } else if (minsToday < 556){
+            currentPeriod = 4;
+        } else if (minsToday < 653){
+            currentPeriod = 3;
+        } else if (minsToday < 783){
+            currentPeriod = 2;
+        } else if (minsToday < 880){
+            currentPeriod = 1;
+        } else {
+            currentPeriod = 5;
+        }
     }
     else {
         if (minsToday < 460){
