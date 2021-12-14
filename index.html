@@ -100,11 +100,14 @@ instead of next to each other */
     var currentPeriod = 0;
     const lunch = ["A Lunch", "B Lunch"];
     const earlyRelease = [62, 145, 180, 211, 239, 295];
-    const earlyReleaseBell = [/*insert ERD bell schedule*/];
+    const earlyReleaseBell = [460, 528, 602, 676, 750];
     const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
-    const PSDBell = [/*insert PSD bell schedule*/];
+    const PSDBell = [460, 520, 586, 652, 718];
     const testing = [56];
+    const testingBell = [460, 475, 715, 790, 835, 880];
+    const testingSchedule = [0, 1, 6, 3, 2, 4];
     const examReverse = [120,121];
+    const examReverseSchedule = [0, 4, 3, 2, 1];
     const bell = [460, 556, 653, 783, 880];
 
     var updatePage = function() {
@@ -172,90 +175,47 @@ instead of next to each other */
         }
     };
 
-/* Enable this when I code in the bell schedule for PSD and ERD
-    for (let i = 0; i < bell.length; i++){
-        if(minsToday < bell[i]){
-            currentPeriod = i;
-        } else {
-            currentPeriod = 5;
-        }
-    }
-*/
-
     //Bell schedule (in minutes since midnight)
-    //TODO make this a loop 
     if (isEarlyRelease){
-        if (minsToday < 460){
-            currentPeriod = 0;
-        } else if (minsToday < 528){
-            currentPeriod = 1;
-        } else if (minsToday < 602){
-            currentPeriod = 2;
-        } else if (minsToday < 676){
-            currentPeriod = 3; 
-        } else if (minsToday < 750){
-            currentPeriod = 4;
-        } else {
-            currentPeriod = 5;
+        for (let i = 0; i < earlyReleaseBell.length; i++){
+            if (minsToday < earlyReleaseBell[i])  {
+                currentPeriod = i;
+            } else {
+                currentPeriod = 5;
+            }
         }
     } else if (isPSD){
-        if (minsToday < 460){
-            currentPeriod = 0;
-        } else if (minsToday < 520){
-            currentPeriod = 1;
-        } else if (minsToday < 586){
-            currentPeriod = 2;
-        } else if (minsToday < 652){
-            currentPeriod = 3;
-        } else if (minsToday < 718){
-            currentPeriod = 4;
-        } else {
-            currentPeriod = 5;
+        for (let i = 0; i < PSDBell.length; i++){
+            if (minsToday < PSDBell[i])  {
+                currentPeriod = i;
+            } else {
+                currentPeriod = 5;
+            }
         }
     } else if (isTesting){
-        if (minsToday < 460){
-            currentPeriod = 0;
-        } else if (minsToday < 475){
-            currentPeriod = 1;
-        } else if (minsToday < 715){
-            currentPeriod = 6;
-        } else if (minsToday < 790){
-            currentPeriod = 3;
-        } else if (minsToday < 835){
-            currentPeriod = 2;
-        } else if (minsToday < 880){
-            currentPeriod = 4;
-        } else {
-            currentPeriod = 5;
-        }        
+        for (let i = 0; i < testingBell.length; i++){
+            if (minsToday < testingBell[i])  {
+                currentPeriod = testingSchedule[i];
+            } else {
+                currentPeriod = 5;
+            }
+        }
     } else if (isExamReverse) {
-        if (minsToday < 460){
-            currentPeriod = 0;
-        } else if (minsToday < 556){
-            currentPeriod = 4;
-        } else if (minsToday < 653){
-            currentPeriod = 3;
-        } else if (minsToday < 783){
-            currentPeriod = 2;
-        } else if (minsToday < 880){
-            currentPeriod = 1;
-        } else {
-            currentPeriod = 5;
+        for (let i = 0; i < bell.length; i++){
+            if (minsToday < bell[i])  {
+                currentPeriod = examReverseSchedule[i];
+            } else {
+                currentPeriod = 5;
+            }
         }
     }
     else {
-        if (minsToday < 460){
-            currentPeriod = 0;
-        } else if (minsToday < 556){
-            currentPeriod = 1;
-        } else if (minsToday < 653){
-            currentPeriod = 2;
-        } else if (minsToday < 783){
-            currentPeriod = 3;
-        } else if (minsToday < 880){
-            currentPeriod = 4;
-        } else {
-            currentPeriod = 5;
+        for (let i = 0; i < bell.length; i++){
+            if (minsToday < bell[i])  {
+                currentPeriod = i;
+            } else {
+                currentPeriod = 5;
+            }
         }
     }
 
