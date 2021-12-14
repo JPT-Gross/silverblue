@@ -100,15 +100,15 @@ instead of next to each other */
     var currentPeriod = 0;
     const lunch = ["A Lunch", "B Lunch"];
     const earlyRelease = [62, 145, 180, 211, 239, 295];
-    const earlyReleaseBell = [460, 528, 602, 676, 750];
+    const earlyReleaseBell = [0, 460, 528, 602, 676, 750];
     const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
-    const PSDBell = [460, 520, 586, 652, 718];
+    const PSDBell = [0, 460, 520, 586, 652, 718];
     const testing = [56];
-    const testingBell = [460, 475, 715, 790, 835, 880];
+    const testingBell = [0, 460, 475, 715, 790, 835, 880];
     const testingSchedule = [0, 1, 6, 3, 2, 4];
     const examReverse = [120,121];
     const examReverseSchedule = [0, 4, 3, 2, 1];
-    const bell = [460, 556, 653, 783, 880];
+    const bell = [0, 460, 556, 653, 783, 880];
 
     var updatePage = function() {
     // This is an array of the school year where calendar[0] is the first day of
@@ -178,43 +178,33 @@ instead of next to each other */
     //Bell schedule (in minutes since midnight)
     if (isEarlyRelease){
         for (let i = 0; i < earlyReleaseBell.length; i++){
-            if (minsToday < earlyReleaseBell[i])  {
+            if (minsToday > earlyReleaseBell[i])  {
                 currentPeriod = i;
-            } else {
-                currentPeriod = 5;
             }
         }
     } else if (isPSD){
         for (let i = 0; i < PSDBell.length; i++){
-            if (minsToday < PSDBell[i])  {
+            if (minsToday > PSDBell[i])  {
                 currentPeriod = i;
-            } else {
-                currentPeriod = 5;
             }
         }
     } else if (isTesting){
         for (let i = 0; i < testingBell.length; i++){
-            if (minsToday < testingBell[i])  {
+            if (minsToday > testingBell[i])  {
                 currentPeriod = testingSchedule[i];
-            } else {
-                currentPeriod = 5;
             }
         }
     } else if (isExamReverse) {
         for (let i = 0; i < bell.length; i++){
-            if (minsToday < bell[i])  {
+            if (minsToday > bell[i]) {
                 currentPeriod = examReverseSchedule[i];
-            } else {
-                currentPeriod = 5;
             }
         }
     }
     else {
         for (let i = 0; i < bell.length; i++){
-            if (minsToday < bell[i])  {
+            if (minsToday > bell[i]) {
                 currentPeriod = i;
-            } else {
-                currentPeriod = 5;
             }
         }
     }
