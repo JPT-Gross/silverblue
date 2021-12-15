@@ -5,88 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #26457a;
-}
-
-/* Style the header */
-.header {
-    color: #f1f1f1;
-    padding: 15px;
-    text-align: center;
-    font-size: 35px;
-}
-
-/* Create three equal columns that floats next to each other */
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    font-size: 45px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-/* Style the footer */
-.footer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-}
-
-.content {
-    text-align: center;
-    font-size: 90px;
-    width: 300px;
-    margin: auto;        
-}
-
-/* Responsive layout - makes the two columns stack on top of each other
-instead of next to each other */
-@media (max-width: 600px) {
-    .column {
-    width: 100%;
-    }
-}
-</style>
-</head>
-<body>
-
-<div class="header">
-    <h2><img src="images/trojan.png" alt="Trojan logo" height="60"> Welcome to 
-        Taravella!</h2>
-</div>
-
-<div class="row">
-    <div class="column" style="background-color:#aaa;">Today is a(n)
-        <div class="content">
-            <p id=day></p>
-        </div>
-    </div>
-    <div class="column" style="background-color:#bbb;">The current class is
-        <div class="content">
-            <p id=period></p>
-        </div>
-    </div>
-</div>
-
-
-<div class="footer">
-    <p id=debug>Footer</p>
-</div>
-
-
 <script>
     const dayColor = 
     ["<b>A</b><br>Day", "<b>B</b><br>Day", "<b>A/B</b><br> Day", "Exam<br>Day", 
@@ -106,7 +24,7 @@ instead of next to each other */
     const testing = [56];
     const testingBell = [0, 460, 475, 715, 790, 835, 880];
     const testingSchedule = [0, 1, 6, 3, 2, 4];
-    const examReverse = [120,121];
+    const examReverse = [120, 121];
     const examReverseSchedule = [0, 4, 3, 2, 1];
     const bell = [0, 460, 556, 653, 783, 880];
 
@@ -228,7 +146,89 @@ instead of next to each other */
     document.getElementById("debug").innerHTML = today;
     };
 
-    window.setInterval(updatePage, 1000);
+    window.setInterval(updatePage, 10);
 </script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #26457a;
+}
+
+/* Style the header */
+.header {
+    color: #f1f1f1;
+    padding: 15px;
+    text-align: center;
+    font-size: 35px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    font-size: 45px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the footer */
+.footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+.content {
+    text-align: center;
+    font-size: 90px;
+    width: 300px;
+    margin: auto;        
+}
+
+/* Responsive layout - makes the two columns stack on top of each other
+instead of next to each other */
+@media (max-width: 600px) {
+    .column {
+    width: 100%;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h2><img src="images/trojan.png" alt="Trojan logo" height="60"> Welcome to 
+        Taravella!</h2>
+</div>
+
+<div class="row">
+    <div class="column" style="background-color:#aaa;">Today is a(n)
+        <div class="content">
+            <p id=day></p>
+        </div>
+    </div>
+    <div class="column" style="background-color:#bbb;">The current class is
+        <div class="content">
+            <p id=period></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="footer">
+    <p id=debug>Footer</p>
+</div>
+
 </body>
 </html>
