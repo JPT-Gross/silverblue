@@ -27,8 +27,6 @@
     const examReverse = [120, 121];
     const examReverseSchedule = [0, 4, 3, 2, 1, 5];
     const bell = [0, 460, 558, 655, 783, 880];
-
-    var updatePage = function() {
     // This is an array of the school year where calendar[0] is the first day of
     // school (8-18-21).
     const calendar = 
@@ -42,6 +40,14 @@
         1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,1,0,1,0,1,6,6,0,1,0,1,0,6,6,4,1,
         0,1,0,6,6,3,3,3,3];
 
+    function updateHTML(elmId, value) {
+        var elem = document.getElementById(elmId);
+        if(typeof elem !== 'undefined' && elem !== null) {
+        elem.innerHTML = value;
+        }
+    }
+
+    var updatePage = function() {
     //Get current day
     var today = new Date();
 
@@ -61,8 +67,11 @@
     var aOrB = differenceInDays;
 
     //Display current day
-    document.getElementById("day").innerHTML = dayColor[calendar[aOrB]];
 
+    if (calendar[aOrB] < 2){
+        updateHTML("day", dayColor[calendar[aOrB]]);
+    }
+    
     //Is it a special day?
     var isEarlyRelease = false;
     var isPSD = false;
@@ -129,11 +138,9 @@
 
     //Change periods for A or B day
     if (calendar[aOrB] < 1) {
-        document.getElementById("period").innerHTML = 
-            classPeriodA[currentPeriod];
+        updateHTML("period", classPeriodA[currentPeriod]);
     } else if (calendar[aOrB] < 2) {
-        document.getElementById("period").innerHTML = 
-            classPeriodB[currentPeriod];
+        updateHTML("period", classPeriodB[currentPeriod]);
     } else {
         //Replace content with "No School" message
         var content = dayColor[calendar[aOrB]];
@@ -143,8 +150,9 @@
             "Enjoy Your " + content;
     }
 
-    document.getElementById("debug").innerHTML = today;
+updateHTML("debug", today);
     };
+
 
     window.setInterval(updatePage, 10);
 </script>
