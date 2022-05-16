@@ -6,26 +6,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <script>
+    //This array will be referenced by the "calendar" array, thus it is filled
+    //with the different types of days that the page will display
     const dayColor = 
-    ["<b>A</b><br>Day", "<b>B</b><br>Day", "<b>A/B</b><br> Day", "Exam<br>Day", 
-    "Day Off", "Thanksgiving", "Weekend", "Winter Break", "Spring Break"];
+        ["<b>A</b><br>Day", "<b>B</b><br>Day", "<b>A/B</b><br> Day", 
+        "Exam<br>Day", "Day Off", "Thanksgiving", "Weekend", "Winter Break", 
+        "Spring Break"];
+    //These arrays cycle through the periods 1-4 on "A" days, 5-8 on "B" days.
+    //"Study Hall" is at the end because my school sends non-testing students to
+    //their study hall class during testing days
     const classPeriodA = 
         ["Good<br>Morning","1st<br>Period", "2nd<br>Period", "3rd<br>Period", 
         "4th<br>Period", "Good<br>Bye", "Study<br>Hall"];
     const classPeriodB = 
         ["Good<br>Morning", "5th<br>Period", "6th<br>Period", "7th<br>Period", 
         "8th<br>Period", "Good<br>Bye", "Study<br>Hall"];
-    const lunch = ["A Lunch", "B Lunch"];
-    const earlyRelease = [62, 145, 180, 211, 239, 295];
-    const earlyReleaseBell = [0, 460, 528, 602, 676, 750];
-    const PSD = [15, 50, 78, 106, 141, 169, 197, 232];
-    const PSDBell = [0, 460, 520, 586, 652, 718];
-    const testing = [56];
-    const testingBell = [0, 460, 475, 715, 790, 835, 880];
-    const testingSchedule = [0, 1, 6, 3, 2, 4, 5];
-    const examReverse = [120, 121];
-    const examReverseSchedule = [0, 4, 3, 2, 1, 5];
+    // const lunch = ["A Lunch", "B Lunch"];
+    const specialDays = {
+        earlyRelease: [62, 145, 180, 211, 239, 295],
+        PSD: [15, 50, 78, 106, 141, 169, 197, 232],
+        testing: [56],
+        examReverse: [120, 121]
+    };
+    const specialBell = {
+        earlyRelease: [0, 460, 528, 602, 676, 750],
+        PSD: [0, 460, 520, 586, 652, 718],
+        testing: [0, 460, 475, 715, 790, 835, 880]
+    };
+    const specialSchedule = {
+        testing: [0, 1, 6, 3, 2, 4, 5],
+        examReverse: [0, 4, 3, 2, 1, 5]
+    };
     const bell = [0, 460, 558, 655, 783, 880];
+    const regularSchedule = [0, 1, 2, 3, 4, 5];
     // This is an array of the school year where calendar[0] is the first day of
     // school (8-18-21).
     const calendar = 
@@ -48,7 +61,7 @@
         }
     }
 
-    var updatePage = function() {
+    let updatePage = function() {
         var today = new Date();
         
         var aOrB = function() {
@@ -78,11 +91,13 @@
         var isTesting = false;
         var isExamReverse = false;
         
-        const special = [isEarlyRelease, isPSD, isTesting, isExamReverse];
+        const specialBool = [isEarlyRelease, isPSD, isTesting, isExamReverse];
+        const specialDay = [specialDays.earlyRelease, specialDays.PSD, 
+                            specialDays.testing, specialDays.examReverse];
 
-        for (let i = 0; i < special.length; i++){
-            if (special[i] == aOrB()){
-                special[i] = true;
+        for (let i = 0; i < specialBool.length; i++){
+            if (specialDay[i] == aOrB()){
+                specialBool[i] = true;
             }	
         };
 
@@ -91,6 +106,29 @@
 
         var currentPeriod = 0;
 
+        let bellSchedule = function(dayType, bellType, scheduleType) {
+            if (dayType){
+                for (let i = 0; i < bellType.length; i++){
+                    if (minsToday >= bellType[i])  {
+                        currentPeriod = scheduleType[i];
+                    }
+                }
+            }
+            else {
+                for (let i = 0; i < bell.length; i++){
+                    if (minsToday >= bell[i]) {
+                        currentPeriod = i;
+                    }
+                }
+            }
+        };
+
+        bellSchedule(isEarlyRelease, specialBell.earlyRelease, regularSchedule);
+        bellSchedule(isPSD, specialBell.PSD, regularSchedule);
+        bellSchedule(isTesting, specialBell.testing, specialSchedule.testing);
+        bellSchedule(isExamReverse, bell, specialSchedule.examReverse);
+
+/*
         if (isEarlyRelease){
             for (let i = 0; i < earlyReleaseBell.length; i++){
                 if (minsToday >= earlyReleaseBell[i])  {
@@ -123,7 +161,7 @@
                 }
             }
         }
-
+*/
         //Displays "Summer" message
         if (aOrB > 295) {
             document.getElementsByTagName('style')[0].innerHTML = 
