@@ -38,22 +38,34 @@
     // periods. If you add a Special Day to these objects, make sure to add one
     // to all three even if the bell or schedule order are not affected.
     const specialDays = {
-        earlyRelease: [62, 145, 180, 211, 239, 295],
+        earlyRelease: [62, 145, 180, 211, 239],
         PSD: [15, 50, 78, 106, 141, 169, 197, 232],
         testing: [56],
-        examReverse: [120, 121]
+        examReverse: [120, 121],
+        examA: [292],
+        examAReverse: [294],
+        examB: [293],
+        examLast: [295]
     };
     const specialBell = {
         earlyRelease: [0, 460, 528, 602, 676, 750],
         PSD: [0, 460, 520, 586, 652, 718],
         testing: [0, 460, 475, 715, 790, 835, 880],
-        examReverse: bell
+        examReverse: bell,
+        examA: [0, 460, 580, 710],
+        examAReverse: [0, 460, 580, 710],
+        examB: [0, 460, 580, 710],
+        examLast: [0, 460, 600, 750]
     };
     const specialSchedule = {
         earlyRelease: regularSchedule,
         PSD: regularSchedule,
         testing: [0, 1, 6, 3, 2, 4, 5],
-        examReverse: [0, 4, 3, 2, 1, 5]
+        examReverse: [0, 4, 3, 2, 1, 5],
+        examA: [0, 1, 2, 5],
+        examAReverse: [0, 3, 4, 5],
+        examB: [0, 1, 2, 5],
+        examLast: [0, 3, 4, 5]
     };
     // This is an array of the school year where calendar[0] is the first day of
     // school, in my case (8-18-21).
