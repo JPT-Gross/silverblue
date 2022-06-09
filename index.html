@@ -121,15 +121,20 @@
         // schedule that matches the special day, if not it returns the regular
         // ones
         let isSpecial = function() {
+            let special = false;
+            let index = null;
             for (let key in specialDays) {
                 for (let element of specialDays[key]) {
-                    if (element == aOrB()){ 
-                        return [specialBell.key, specialSchedule.key];
-                    }
-                    else {
-                        return [bell, regularSchedule];
+                    if (element == aOrB()){
+                        index = key;
+                        special = true;
                     }
                 };
+            };
+            if (special == true){
+                return [specialBell[index], specialSchedule[index]];
+            } else {
+                return [bell, regularSchedule];
             };
         };
 
@@ -235,7 +240,6 @@ instead of next to each other */
     }
 }
 </style>
-</head>
 <body>
 
 <div class="header">
