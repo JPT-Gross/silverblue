@@ -28,19 +28,20 @@
     // This is the prototype for the lunch display. I think the buildings are
     // incorrectly placed so I need to make sure BEFORE IT IS PUBLISHED.
     const lunch = 
-        ["A Lunch: Main Bldg., 900s, Neff Hall", "B Lunch: 800s, 1000s", "\0"];
+        ["A Lunch: Main Bldg., 900s, Neff Hall", "B Lunch: 800s, 1000s",
+        "Message of the Day:"];
 
     // These two arrays make up your school's typical bell schedule. "Bell" are
     // the minutes of the day that each bell rings, "regularSchedule" are the
     // periods your school has and their order 
-    const bell = [0, 460, 558, 655, 783, 880];
+    const bell = [0, 460, 556, 654, 782, 880];
     const regularSchedule = [0, 1, 2, 3, 4, 5];
 
     //These two arrays make up your school's luch schedule assuming there are
     //two(or more) discrete lunches. If your school employs a rolling lunch
     //schedule you might be able to make this work, but a totally different
     //solution will most likely be required.
-    const regularLunchBell = [0, 558, 588, 625, 655];
+    const regularLunchBell = [0, 654, 684, 752, 782];
     const regularLunch = [2, 0, 2, 1, 2];
 
     // The next four "specialX" objects are for days that deviate from your
@@ -208,11 +209,11 @@
         }
 
         //Displays current lunch
-        //if (calendar[aOrB()] < 4) {
-        //        updateHTML(
-        //            "lunch", lunch[bellSchedule(isSpecial()[2], isSpecial()[3])]
-        //        );
-        //}
+        if (calendar[aOrB()] < 4) {
+                updateHTML(
+                    "lunch", lunch[bellSchedule(isSpecial()[2], isSpecial()[3])]
+                );
+        }
         
         updateHTML("debug", today);
     };
@@ -282,7 +283,17 @@ body {
     text-align: center;
 }
 
+.footer3 {
+    color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
 #lunch {
+    font-size: 45px;
+}
+
+#motd {
     font-size: 25px;
 }
 
@@ -325,14 +336,19 @@ instead of next to each other */
 
 
 <div class="footer1">
-    <p id=lunch>Lunch: A</p>
+    <p id=lunch></p>
 </div>
 
 <div class="footer2">
-    <p id=motd>There are two types of people...</p>
+    <p id=motd>
+        <!-- Place your Message of the Day below -->
+        There are two types of people: Trojans and those who want to be Trojans.
+        - Principal De Armas
+        <!-- Place your Message of the Day above-->
+    </p>
 </div>
 
-<div class="footer1">
+<div class="footer3">
     <p id=debug>Footer</p>
 </div>
 
