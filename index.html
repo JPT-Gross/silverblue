@@ -51,7 +51,7 @@
     // periods. If you add a Special Day to these objects, make sure to add one
     // to all three even if the bell or schedule order are not affected.
     const specialDays = {
-        earlyRelease: [62, 145, 180, 211, 239],
+        earlyRelease: [62, 145, 182, 211, 239],
         PSD: [15, 50, 78, 106, 141, 169, 197, 232],
         testing: [56],
         examReverse: [120, 121],
@@ -145,19 +145,23 @@
         // ones
         let isSpecial = function() {
             let special = false;
-            let index = null;
+            let items = -1;
+            let newBell = null;
+            let newSchedule = null;
+            let newLunch = null;
             for (let key in specialDays) {
                 for (let element of specialDays[key]) {
                     if (element == aOrB()){
-                        index = key;
+                        items++;
+                        newBell = Object.values(specialBell)[items];
+                        newSchedule = Object.values(specialSchedule)[items];
+                        newLunch = Object.values(specialLunch)[items];
                         special = true;
                     }
                 };
             };
             if (special == true){
-                return 
-                    [specialBell[index], specialSchedule[index], 
-                    regularLunchBell, specialLunch[index]];
+                return [newBell, newSchedule, regularLunchBell, newLunch];
             } else {
                 return [bell, regularSchedule, regularLunchBell, regularLunch];
             };
@@ -218,7 +222,7 @@
         updateHTML("debug", today);
     };
 
-
+console.log(Object.values(specialBell)[0]);
     window.setInterval(updatePage, 10);
 </script>
 
