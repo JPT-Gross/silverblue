@@ -154,9 +154,8 @@
         // schedule that matches the special day, if not it returns the regular
         // ones
         let isSpecial = function() {
-            let i = -1;
+            let i = 0;
             for (let key in specialDays) {
-                i++;
                 for (let element of specialDays[key]) {
                     if (element == aOrB()){
                         return [Object.values(specialBell)[i], 
@@ -165,6 +164,7 @@
                         Object.values(specialLunch)[i]];
                     };
                 };
+                i++;
             };
                 return [bell, regularSchedule, regularLunchBell, regularLunch];
             };
