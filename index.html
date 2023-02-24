@@ -17,10 +17,10 @@
     // to their study hall class during testing days
     const classPeriodA = 
         ["Good<br>Morning", "1st<br>Period", "2nd<br>Period", "3rd<br>Period", 
-        "4th<br>Period", "Good<br>Bye", "Study<br>Hall"];
+        "4th<br>Period", "Good<br>Bye", "Study<br>Hall", "Testing"];
     const classPeriodB = 
         ["Good<br>Morning", "5th<br>Period", "6th<br>Period", "7th<br>Period", 
-        "8th<br>Period", "Good<br>Bye", "Study<br>Hall"];
+        "8th<br>Period", "Good<br>Bye", "Study<br>Hall", "SAT<br>Testing"];
     const classPeriodAB = 
         ["Good<br>Morning", "1st<br>Period", "2nd<br>Period", "3rd<br>Period", 
         "4th<br>Period", "5th<br>Period", "6th<br>Period", "7th<br>Period", 
@@ -29,7 +29,7 @@
     // incorrectly placed so I need to make sure BEFORE IT IS PUBLISHED.
     const lunch = 
         ["A Lunch: Main Bldg., 900s, Neff Hall", "B Lunch: 800s, 1000s",
-        "Message of the Day:"];
+        "Message of the Day:", "Lunch: Review Rooms", "Lunch: Testing Rooms"];
 
     // These two arrays make up your school's typical bell schedule. "Bell" are
     // the minutes of the day that each bell rings, "regularSchedule" are the
@@ -53,7 +53,7 @@
     const specialDays = {
         earlyRelease: [62, 145, 182, 212, 247],
         PSD: [],
-        testing: [],
+        testing: [197],
         examReverse: [],
         examA: [],
         examAReverse: [],
@@ -63,7 +63,7 @@
     const specialBell = {
         earlyRelease: [0, 460, 528, 602, 676, 750],
         PSD: [0, 460, 520, 586, 652, 718],
-        testing: [0, 460, 475, 715, 790, 835, 880],
+        testing: [0, 460, 474, 760, 800, 840, 880],
         examReverse: bell,
         examA: [0, 460, 580, 710],
         examAReverse: [0, 460, 580, 710],
@@ -73,17 +73,27 @@
     const specialSchedule = {
         earlyRelease: regularSchedule,
         PSD: regularSchedule,
-        testing: [0, 1, 6, 3, 2, 4, 5],
+        testing: [0, 1, 7, 2, 3, 4, 5],
         examReverse: [0, 4, 3, 2, 1, 5],
         examA: [0, 1, 2, 5],
         examAReverse: [0, 4, 3, 5],
         examB: [0, 1, 2, 5],
         examLast: [0, 4, 3, 5]
     };
+    const specialLunchBell = {
+        earlyRelease: regularLunchBell,
+        PSD: regularLunchBell,
+        testing: [0, 660, 690, 730, 760],
+        examReverse: bell,
+        examA: regularLunchBell,
+        examAReverse: regularLunchBell,
+        examB: regularLunchBell,
+        examLast: regularLunchBell
+    };
     const specialLunch = {
         earlyRelease: [2, 2, 2, 2, 2],
         PSD: [2, 2, 2, 2, 2],
-        testing: regularLunch,
+        testing: [2, 3, 2, 4, 2],
         examReverse: regularLunch,
         examA: [2, 2, 2, 2, 2],
         examAReverse: [2, 2, 2, 2, 2],
@@ -144,24 +154,20 @@
         // schedule that matches the special day, if not it returns the regular
         // ones
         let isSpecial = function() {
-            let special = false;
-            let items = -1;
+            let i = -1;
             for (let key in specialDays) {
+                i++;
                 for (let element of specialDays[key]) {
                     if (element == aOrB()){
-                        items++;
-                        special = true;
-                    }
+                        return [Object.values(specialBell)[i], 
+                        Object.values(specialSchedule)[i], 
+                        Object.values(specialLunchBell)[i], 
+                        Object.values(specialLunch)[i]];
+                    };
                 };
             };
-            if (special == true){
-                return [Object.values(specialBell)[items], 
-                Object.values(specialSchedule)[items], regularLunchBell, 
-                Object.values(specialLunch)[items]];
-            } else {
                 return [bell, regularSchedule, regularLunchBell, regularLunch];
             };
-        };
 
         // This function takes outputed arrays from the "isSpecial" function and
         // loops through them to return the correct period of the day
@@ -218,7 +224,6 @@
         updateHTML("debug", today);
     };
 
-console.log(Object.values(specialBell)[0]);
     window.setInterval(updatePage, 10);
 </script>
 
@@ -342,8 +347,7 @@ instead of next to each other */
 <div class="footer2">
     <p id=motd>
         <!-- Place your Message of the Day below -->
-        There are two types of people: Trojans and those who want to be Trojans.
-        - Principal De Armas
+        SAT Testing is Wednesday March 1st.
         <!-- Place your Message of the Day above-->
     </p>
 </div>
