@@ -9,9 +9,8 @@
                 />
         </head>
         <script>
-                // This array will be referenced by the "calendar" array, thus
-                // it is filled with the different types of days that the page
-                // will display
+                // This array will be referenced by the "calendar" array, thus it is filled
+                // with the different types of days that the page will display
                 const dayColor = [
                         "<b>A</b><br>Day",
                         "<b>B</b><br>Day",
@@ -23,10 +22,9 @@
                         "Winter Break",
                         "Spring Break",
                 ];
-                // These arrays cycle through the periods 1-4 on "A" days, 5-8
-                // on "B" days. "Study Hall" is at the end because my school
-                // sends non-testing students to their study hall class during
-                // testing days
+                // These arrays cycle through the periods 1-4 on "A" days, 5-8 on "B" days.
+                // "Study Hall" is at the end because my school sends non-testing students
+                // to their study hall class during testing days
                 const classPeriodA = [
                         "Good<br>Morning",
                         "1st<br>Period",
@@ -60,9 +58,8 @@
                         "Good<br>Bye",
                         "Study<br>Hall",
                 ];
-                // This is the prototype for the lunch display. I think the
-                // buildings are incorrectly placed so I need to make sure
-                // BEFORE IT IS PUBLISHED.
+                // This is the prototype for the lunch display. I think the buildings are
+                // incorrectly placed so I need to make sure BEFORE IT IS PUBLISHED.
                 const lunch = [
                         "A Lunch: Main Bldg., 900s, Neff Hall",
                         "B Lunch: 800s, 1000s",
@@ -71,33 +68,29 @@
                         "Lunch: Testing Rooms",
                 ];
 
-                // These two arrays make up your school's typical bell schedule.
-                // "Bell" are the minutes of the day that each bell rings,
-                // "regularSchedule" are the periods your school has and their
-                // order
+                // These two arrays make up your school's typical bell schedule. "Bell" are
+                // the minutes of the day that each bell rings, "regularSchedule" are the
+                // periods your school has and their order
                 const bell = [0, 460, 556, 654, 782, 880];
                 const regularSchedule = [0, 1, 2, 3, 4, 5];
 
-                //These two arrays make up your school's luch schedule assuming
-                //there are two(or more) discrete lunches. If your school
-                //employs a rolling lunch schedule you might be able to make
-                //this work, but a totally different solution will most likely
-                //be required.
+                //These two arrays make up your school's luch schedule assuming there are
+                //two(or more) discrete lunches. If your school employs a rolling lunch
+                //schedule you might be able to make this work, but a totally different
+                //solution will most likely be required.
                 const regularLunchBell = [0, 654, 684, 752, 782];
                 const regularLunch = [2, 0, 2, 1, 2];
 
-                // The next four "specialX" objects are for days that deviate
-                // from your school's typical bell schedule, "specialDays" are
-                // the days of the school year that the special day occurs,
-                // "specialBell" are the altered times the bell will ring, and
-                // "specialSchedule" are the altered order of the periods. If
-                // you add a Special Day to these objects, make sure to add one
-                // to all three even if the bell or schedule order are not
-                // affected.
+                // The next four "specialX" objects are for days that deviate from your
+                // school's typical bell schedule, "specialDays" are the days of the school
+                // year that the special day occurs, "specialBell" are the altered times the
+                // bell will ring, and "specialSchedule" are the altered order of the
+                // periods. If you add a Special Day to these objects, make sure to add one
+                // to all three even if the bell or schedule order are not affected.
                 const specialDays = {
-                        earlyRelease: [62, 145, 182, 212, 247],
+                        earlyRelease: [63, 151, 177, 213, 277],
                         PSD: [],
-                        testing: [197],
+                        testing: [],
                         examReverse: [],
                         examA: [],
                         examAReverse: [],
@@ -144,30 +137,29 @@
                         examB: [2, 2, 2, 2, 2],
                         examLast: [2, 2, 2, 2, 2],
                 };
-                // This is an array of the school year where calendar[0] is the
-                // first day of school, in my case (8-16-22).
+                // This is an array of the school year where calendar[0] is the first day of
+                // school, in my case (8-16-22).
                 const calendar = [
-                        2, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6,
-                        6, 4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1,
-                        0, 6, 6, 4, 1, 0, 1, 0, 6, 6, 1, 0, 4, 1, 0, 6, 6, 1, 0,
-                        1, 0, 1, 6, 6, 0, 1, 0, 1, 4, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                        1, 0, 1, 0, 1, 6, 6, 0, 4, 1, 0, 4, 6, 6, 1, 0, 1, 0, 1,
-                        6, 6, 5, 5, 5, 5, 5, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1,
-                        0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 3, 3, 3, 3, 7, 7, 7,
-                        7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 0, 1, 0, 1, 4, 6,
-                        6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0,
-                        1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 4, 0,
-                        1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
-                        0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6, 0, 1, 0, 1, 0,
-                        6, 6, 1, 0, 1, 0, 4, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0,
-                        1, 4, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0,
-                        1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6,
-                        6, 4, 1, 0, 1, 0, 6, 6, 3, 3, 3, 3,
+                        2, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 0,
+                        6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0,
+                        1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1,
+                        0, 1, 0, 1, 6, 6, 0, 4, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6,
+                        6, 1, 4, 0, 1, 4, 6, 6, 0, 1, 0, 1, 0, 6, 6, 5, 5, 5, 5,
+                        5, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0,
+                        1, 0, 1, 6, 6, 0, 3, 3, 3, 3, 6, 6, 7, 7, 7, 7, 7, 7, 7,
+                        7, 7, 7, 7, 7, 6, 6, 1, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1,
+                        6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1,
+                        0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 0, 6, 6, 1,
+                        0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6,
+                        6, 0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6, 0, 1, 0, 1,
+                        0, 6, 6, 1, 0, 4, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1,
+                        0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                        1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 0,
+                        6, 6, 1, 0, 3, 3, 3, 6, 6, 3,
                 ];
 
-                // This function updates the HTML amd clears errors in the log
-                // when elements are undefined as a result of switching between
-                // school days and weekends
+                // This function updates the HTML amd clears errors in the log when elements
+                // are undefined as a result of switching between school days and weekends
                 function updateHTML(elmId, value) {
                         var elem = document.getElementById(elmId);
                         if (typeof elem !== "undefined" && elem !== null) {
@@ -178,16 +170,13 @@
                 let updatePage = function () {
                         var today = new Date();
 
-                        // This function returns the num. of days since the
-                        // first day of school
+                        // This function returns the num. of days since the first day of school
                         var aOrB = function () {
-                                // Change the date in quotes to your first day
-                                // of school
-                                var date1 = new Date("08/16/2022");
+                                // Change the date in quotes to your first day of school
+                                var date1 = new Date("08/21/2023");
                                 var date2 = today;
 
-                                // Calculates the time difference of the two
-                                // dates in minutes
+                                // Calculates the time difference of the two dates in minutes
                                 var differenceInTime =
                                         date2.getTime() - date1.getTime();
 
@@ -204,15 +193,15 @@
                                 updateHTML("day", dayColor[calendar[aOrB()]]);
                         }
 
-                        // This function loops through each array in the
-                        // "specialDays" object and checks it against the "aOrB"
-                        // function to see if it is currently a special day. If
-                        // it is, it will return the modified bell and period
-                        // schedule that matches the special day, if not it
-                        // returns the regular ones
+                        // This function loops through each array in the "specialDays" object
+                        // and checks it against the "aOrB" function to see if it is currently a
+                        // special day. If it is, it will return the modified bell and period
+                        // schedule that matches the special day, if not it returns the regular
+                        // ones
                         let isSpecial = function () {
-                                let i = 0;
+                                let i = -1;
                                 for (let key in specialDays) {
+                                        i++;
                                         for (let element of specialDays[key]) {
                                                 if (element == aOrB()) {
                                                         return [
@@ -231,7 +220,6 @@
                                                         ];
                                                 }
                                         }
-                                        i++;
                                 }
                                 return [
                                         bell,
@@ -241,9 +229,8 @@
                                 ];
                         };
 
-                        // This function takes outputed arrays from the
-                        // "isSpecial" function and loops through them to return
-                        // the correct period of the day
+                        // This function takes outputed arrays from the "isSpecial" function and
+                        // loops through them to return the correct period of the day
                         let bellSchedule = function (bellType, scheduleType) {
                                 // Bell schedule (in minutes since midnight)
                                 var minsToday =
@@ -299,8 +286,7 @@
                                         ]
                                 );
                         } else {
-                                //Replace content with "No School" message for
-                                //weekends and holidays
+                                //Replace content with "No School" message for weekends and holidays
                                 var content = dayColor[calendar[aOrB()]];
                                 document.getElementsByTagName(
                                         "style"
@@ -355,8 +341,7 @@
                         font-size: 35px;
                 }
 
-                /* Add a container to keep both columns an equal height
-        regardless of content*/
+                /* Add a container to keep both columns an equal height regardless of content*/
                 .container {
                         overflow: hidden;
                         width: 100%;
@@ -413,8 +398,8 @@
                         margin: auto;
                 }
 
-                /* Responsive layout - makes the two columns stack on top of
-each other instead of next to each other */
+                /* Responsive layout - makes the two columns stack on top of each other
+instead of next to each other */
                 @media (max-width: 600px) {
                         .column {
                                 width: 100%;
@@ -425,7 +410,7 @@ each other instead of next to each other */
                 <div class="header">
                         <h2>
                                 <img
-                                        src="images/trojan.png"
+                                        src="trojan.png"
                                         alt="Trojan logo"
                                         height="60"
                                 />
@@ -463,7 +448,9 @@ each other instead of next to each other */
                 <div class="footer2">
                         <p id="motd">
                                 <!-- Place your Message of the Day below -->
-                                SAT Testing is Wednesday March 1st.
+                                "There are two types of people, TROJANS and
+                                those who want to be TROJANS! WE ARE TROJANS!"
+                                AT JPT WE ARE FAMILY!
                                 <!-- Place your Message of the Day above-->
                         </p>
                 </div>
