@@ -157,27 +157,27 @@
         // elements are undefined as a result of switching between school days
         // and weekends
         function updateHTML(elmId, value) {
-            var elem = document.getElementById(elmId);
+            let elem = document.getElementById(elmId);
             if (typeof elem !== 'undefined' && elem !== null) {
                 elem.innerHTML = value;
             }
         }
 
         let updatePage = function () {
-            var today = new Date();
+            let today = new Date();
 
             // This function returns the num. of days since the first day of
             // school
-            var aOrB = function () {
+            let aOrB = function () {
                 // Change the date in quotes to your first day of school
-                var date1 = new Date('08/12/2024');
-                var date2 = today;
+                let date1 = new Date('08/12/2024');
+                let date2 = today;
 
                 // Calculates the time difference of the two dates in minutes
-                var differenceInTime = date2.getTime() - date1.getTime();
+                let differenceInTime = date2.getTime() - date1.getTime();
 
                 // Converts minutes to days
-                var differenceInDays = Math.trunc(
+                let differenceInDays = Math.trunc(
                     differenceInTime / (1000 * 3600 * 24),
                 );
 
@@ -197,29 +197,27 @@
             // bell and period schedule that matches the special day, if not it
             // returns the regular ones
             let isSpecial = function () {
-                let i = -1;
                 for (let key in specialDays) {
-                    i++;
-                    for (let element of specialDays[key]) {
-                        if (element == dayIndex) {
-                            return [
-                                Object.values(specialBell)[i],
-                                Object.values(specialSchedule)[i],
-                                Object.values(specialLunchBell)[i],
-                                Object.values(specialLunch)[i],
-                            ];
-                        }
+                    if (specialDays[key].includes(dayIndex)) {
+                        return [
+                            specialBell[key],
+                            specialSchedule[key],
+                            specialLunchBell[key],
+                            specialLunch[key],
+                        ];
                     }
                 }
                 return [bell, regularSchedule, regularLunchBell, regularLunch];
             };
 
+            const dayType = isSpecial();
+
             // This function takes outputed arrays from the "isSpecial" function
             // and loops through them to return the correct period of the day
             let bellSchedule = function (bellType, scheduleType) {
                 // Bell schedule (in minutes since midnight)
-                var minsToday = today.getMinutes() + today.getHours() * 60;
-                var currentPeriod = 0;
+                let minsToday = today.getMinutes() + today.getHours() * 60;
+                let currentPeriod = 0;
                 for (let i = 0; i < bellType.length; i++) {
                     if (minsToday >= bellType[i]) {
                         currentPeriod = scheduleType[i];
@@ -247,20 +245,20 @@
             } else if (calendar[dayIndex] < 1) {
                 updateHTML(
                     'period',
-                    classPeriodA[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                    classPeriodA[bellSchedule(dayType[0], dayType[1])],
                 );
             } else if (calendar[dayIndex] < 2) {
                 updateHTML(
                     'period',
-                    classPeriodB[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                    classPeriodB[bellSchedule(dayType[0], dayType[1])],
                 );
             } else if (calendar[dayIndex] < 4) {
                 updateHTML(
                     'period',
-                    classPeriodAB[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                    classPeriodAB[bellSchedule(dayType[0], dayType[1])],
                 );
             } else {
-                var content = dayColor[calendar[dayIndex]];
+                let content = dayColor[calendar[dayIndex]];
                 showNoSchoolOverlay('Enjoy Your ' + content);
             }
 
@@ -270,7 +268,7 @@
             if (calendar[dayIndex] < 4) {
                 updateHTML(
                     'lunch',
-                    lunch[bellSchedule(isSpecial()[2], isSpecial()[3])],
+                    lunch[bellSchedule(dayType[2], dayType[3])],
                 );
             }
 
