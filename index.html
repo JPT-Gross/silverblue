@@ -228,12 +228,21 @@
                 return currentPeriod;
             };
 
+            function showNoSchoolOverlay(htmlMessage) {
+                const overlay = document.getElementById('noschoolOverlay');
+                const text = document.getElementById('noschoolText');
+                if (text) text.innerHTML = htmlMessage; // dayColor contains HTML (e.g., <b>A</b><br>Day)
+                if (overlay) overlay.style.display = 'flex';
+            }
+
+            function hideNoSchoolOverlay() {
+                const overlay = document.getElementById('noschoolOverlay');
+                if (overlay) overlay.style.display = 'none';
+            }
+
             // Displays "Summer" message
             if (dayIndex >= calendar.length) {
-                document.getElementsByTagName('style')[0].innerHTML =
-                    'body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}';
-                document.getElementsByTagName('body')[0].innerHTML =
-                    'Enjoy Your Summer!';
+                showNoSchoolOverlay('Enjoy Your Summer!');
                 // Displays current period for A or B day
             } else if (calendar[dayIndex] < 1) {
                 updateHTML(
@@ -251,14 +260,11 @@
                     classPeriodAB[bellSchedule(isSpecial()[0], isSpecial()[1])],
                 );
             } else {
-                //Replace content with "No School" message for weekends and
-                //holidays
                 var content = dayColor[calendar[dayIndex]];
-                document.getElementsByTagName('style')[0].innerHTML =
-                    'body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}';
-                document.getElementsByTagName('body')[0].innerHTML =
-                    'Enjoy Your ' + content;
+                showNoSchoolOverlay('Enjoy Your ' + content);
             }
+
+            hideNoSchoolOverlay();
 
             //Displays current lunch
             if (calendar[dayIndex] < 4) {
@@ -289,6 +295,27 @@
             border: 0;
             font-size: 100%;
             vertical-align: baseline;
+        }
+
+        /* Full-screen overlay for weekends/holidays/summer */
+        #noschoolOverlay {
+            position: fixed;
+            inset: 0; /* top/right/bottom/left: 0 */
+            width: 100vw;
+            height: 100vh;
+            background: #1e1e1e;
+            color: #f1f1f1;
+            display: none; /* hidden by default */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80px;
+            z-index: 9999; /* ensure it’s above everything */
+        }
+
+        #noschoolOverlay b {
+            font-weight: 700;
         }
 
         /* Style the header */
@@ -366,6 +393,11 @@ instead of next to each other */
         }
     </style>
     <body>
+        <!-- Full-screen No School overlay (hidden by default) -->
+        <div id="noschoolOverlay" aria-live="polite">
+            <div id="noschoolText"></div>
+        </div>
+
         <div class="header">
             <h2>
                 <img src="trojan.png" alt="Trojan logo" height="60" />
