@@ -1,14 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
     <head>
         <title>JPT Schedule</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="shortcut icon"
-            href="images/favicon.ico"
-            type="image/x-icon"
-        />
     </head>
     <script>
         // This array will be referenced by the "calendar" array, thus it is
@@ -158,9 +153,6 @@
             1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 4, 0, 1, 3, 3, 6, 6, 3, 3,
         ];
 
-        let imgCount = 0;
-        let latch = 0;
-
         // This function updates the HTML amd clears errors in the log when
         // elements are undefined as a result of switching between school days
         // and weekends
@@ -186,7 +178,7 @@
 
                 // Converts minutes to days
                 var differenceInDays = Math.trunc(
-                    differenceInTime / (1000 * 3600 * 24)
+                    differenceInTime / (1000 * 3600 * 24),
                 );
 
                 return differenceInDays;
@@ -234,51 +226,28 @@
                 return currentPeriod;
             };
 
-            let d = new Date();
-            let mins = d.getMinutes();
-
-            if (mins % 3 === 0 && latch === 0) {
-                imgCount = (imgCount + 1) % 5;
-                latch = 1;
-            } else if (mins % 3 !== 0) {
-                latch = 0;
-            }
-
-            if (mins % 3 === 0) {
-                // Show announcement images every third minute
-                document.getElementsByTagName('style')[0].innerHTML =
-                    'body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #0A3764; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}';
-                document.getElementsByTagName('body')[0].innerHTML =
-                    '<img src="images/' + imgCount + '.png">';
-            } else if (calendar[aOrB()] < 1) {
-                styleElement.innerHTML = ogStyle;
-                bodyElement.innerHTML = ogBody;
-                updateHTML(
-                    'period',
-                    classPeriodA[bellSchedule(isSpecial()[0], isSpecial()[1])]
-                );
-                updateHTML('day', dayColor[calendar[aOrB()]]);
-            } else if (calendar[aOrB()] < 2) {
-                styleElement.innerHTML = ogStyle;
-                bodyElement.innerHTML = ogBody;
-                updateHTML(
-                    'period',
-                    classPeriodB[bellSchedule(isSpecial()[0], isSpecial()[1])]
-                );
-                updateHTML('day', dayColor[calendar[aOrB()]]);
-            } else if (calendar[aOrB()] < 4) {
-                styleElement.innerHTML = ogStyle;
-                bodyElement.innerHTML = ogBody;
-                updateHTML(
-                    'period',
-                    classPeriodAB[bellSchedule(isSpecial()[0], isSpecial()[1])]
-                );
-                updateHTML('day', dayColor[calendar[aOrB()]]);
-            } else if (aOrB() >= calendar.length) {
+            // Displays "Summer" message
+            if (aOrB() >= calendar.length) {
                 document.getElementsByTagName('style')[0].innerHTML =
                     'body {font-family: Arial, Helvetica, sans-serif; color: #f1f1f1; font-size: 80px; background-color: #1e1e1e; text-align: center; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}';
                 document.getElementsByTagName('body')[0].innerHTML =
                     'Enjoy Your Summer!';
+                // Displays current period for A or B day
+            } else if (calendar[aOrB()] < 1) {
+                updateHTML(
+                    'period',
+                    classPeriodA[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                );
+            } else if (calendar[aOrB()] < 2) {
+                updateHTML(
+                    'period',
+                    classPeriodB[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                );
+            } else if (calendar[aOrB()] < 4) {
+                updateHTML(
+                    'period',
+                    classPeriodAB[bellSchedule(isSpecial()[0], isSpecial()[1])],
+                );
             } else {
                 //Replace content with "No School" message for weekends and
                 //holidays
@@ -293,12 +262,14 @@
             if (calendar[aOrB()] < 4) {
                 updateHTML(
                     'lunch',
-                    lunch[bellSchedule(isSpecial()[2], isSpecial()[3])]
+                    lunch[bellSchedule(isSpecial()[2], isSpecial()[3])],
                 );
             }
 
             updateHTML('debug', today);
         };
+
+        window.setInterval(updatePage, 10);
     </script>
 
     <style>
@@ -310,7 +281,7 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #0a3764;
+            background-color: #26457a;
             margin: 0;
             padding: 0;
             border: 0;
@@ -395,7 +366,7 @@ instead of next to each other */
     <body>
         <div class="header">
             <h2>
-                <img src="images/trojan.png" alt="Trojan logo" height="60" />
+                <img src="trojan.png" alt="Trojan logo" height="60" />
                 Welcome to Taravella!
             </h2>
         </div>
@@ -434,11 +405,4 @@ instead of next to each other */
             <p id="debug">Footer</p>
         </div>
     </body>
-    <script>
-        const styleElement = document.getElementsByTagName('style')[0];
-        const ogStyle = styleElement.innerHTML;
-        const bodyElement = document.getElementsByTagName('body')[0];
-        const ogBody = bodyElement.innerHTML;
-        window.setInterval(updatePage, 10);
-    </script>
 </html>
