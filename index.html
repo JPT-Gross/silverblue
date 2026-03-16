@@ -180,12 +180,12 @@
             if (overlay) overlay.style.display = 'none';
         }
 
-        let updatePage = function () {
+        function updatePage() {
             let today = new Date();
 
             // This function returns the num. of days since the first day of
             // school
-            let aOrB = function () {
+            function aOrB() {
                 // Change the date in quotes to your first day of school
                 let date1 = new Date('08/11/2025');
                 let date2 = today;
@@ -199,7 +199,7 @@
                 );
 
                 return differenceInDays;
-            };
+            }
 
             const dayIndex = aOrB();
 
@@ -213,7 +213,7 @@
             // currently a special day. If it is, it will return the modified
             // bell and period schedule that matches the special day, if not it
             // returns the regular ones
-            let isSpecial = function () {
+            function isSpecial() {
                 for (let key in specialDays) {
                     if (specialDays[key].includes(dayIndex)) {
                         return [
@@ -225,13 +225,13 @@
                     }
                 }
                 return [bell, regularSchedule, regularLunchBell, regularLunch];
-            };
+            }
 
             const scheduleBundle = isSpecial();
 
             // This function takes outputed arrays from the "isSpecial" function
             // and loops through them to return the correct period of the day
-            let bellSchedule = function (bellType, scheduleType) {
+            function bellSchedule(bellType, scheduleType) {
                 // Bell schedule (in minutes since midnight)
                 let minsToday = today.getMinutes() + today.getHours() * 60;
                 let currentPeriod = 0;
@@ -241,11 +241,12 @@
                     }
                 }
                 return currentPeriod;
-            };
+            }
 
             // Displays "Summer" message
             if (dayIndex >= calendar.length) {
                 showNoSchoolOverlay('Enjoy Your Summer!');
+                return;
                 // Displays current period for A or B day
             } else if (calendar[dayIndex] < 1) {
                 updateHTML(
@@ -254,7 +255,6 @@
                         bellSchedule(scheduleBundle[0], scheduleBundle[1])
                     ],
                 );
-                hideNoSchoolOverlay();
             } else if (calendar[dayIndex] < 2) {
                 updateHTML(
                     'period',
@@ -262,7 +262,6 @@
                         bellSchedule(scheduleBundle[0], scheduleBundle[1])
                     ],
                 );
-                hideNoSchoolOverlay();
             } else if (calendar[dayIndex] < 4) {
                 updateHTML(
                     'period',
@@ -270,11 +269,13 @@
                         bellSchedule(scheduleBundle[0], scheduleBundle[1])
                     ],
                 );
-                hideNoSchoolOverlay();
             } else {
                 let content = dayColor[calendar[dayIndex]];
                 showNoSchoolOverlay('Enjoy Your ' + content);
+                return;
             }
+
+            hideNoSchoolOverlay();
 
             //Displays current lunch
             if (calendar[dayIndex] < 4) {
@@ -283,9 +284,9 @@
                     lunch[bellSchedule(scheduleBundle[2], scheduleBundle[3])],
                 );
             }
-            console.log(calendar.length);
+
             updateHTML('debug', today);
-        };
+        }
 
         window.setInterval(updatePage, 1000);
     </script>
