@@ -252,22 +252,23 @@
                     'period',
                     classPeriodA[bellSchedule(dayType[0], dayType[1])],
                 );
+                hideNoSchoolOverlay();
             } else if (calendar[dayIndex] < 2) {
                 updateHTML(
                     'period',
                     classPeriodB[bellSchedule(dayType[0], dayType[1])],
                 );
+                hideNoSchoolOverlay();
             } else if (calendar[dayIndex] < 4) {
                 updateHTML(
                     'period',
                     classPeriodAB[bellSchedule(dayType[0], dayType[1])],
                 );
+                hideNoSchoolOverlay();
             } else {
                 let content = dayColor[calendar[dayIndex]];
                 showNoSchoolOverlay('Enjoy Your ' + content);
             }
-
-            hideNoSchoolOverlay();
 
             //Displays current lunch
             if (calendar[dayIndex] < 4) {
