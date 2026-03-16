@@ -9,400 +9,120 @@
             type="image/x-icon"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <script>
-        // This array will be referenced by the "calendar" array, thus it is
-        // filled with the different types of days that the page will display
-        const dayColor = [
-            '<b>A</b><br>Day',
-            '<b>B</b><br>Day',
-            '<b>A/B</b><br> Day',
-            'Exam<br>Day',
-            'Day Off',
-            'Thanksgiving',
-            'Weekend',
-            'Winter Break',
-            'Spring Break',
-        ];
-        // These arrays cycle through the periods 1-4 on "A" days, 5-8 on "B"
-        // days. "Study Hall" is at the end because my school sends non-testing
-        // students to their study hall class during testing days
-        const classPeriodA = [
-            'Good<br>Morning',
-            '1st<br>Period',
-            '2nd<br>Period',
-            '3rd<br>Period',
-            '4th<br>Period',
-            'Good<br>Bye',
-            'Study<br>Hall',
-            'Testing',
-        ];
-        const classPeriodB = [
-            'Good<br>Morning',
-            '5th<br>Period',
-            '6th<br>Period',
-            '7th<br>Period',
-            '8th<br>Period',
-            'Good<br>Bye',
-            'Study<br>Hall',
-            'SAT<br>Testing',
-        ];
-        const classPeriodAB = [
-            'Good<br>Morning',
-            '1st<br>Period',
-            '2nd<br>Period',
-            '3rd<br>Period',
-            '4th<br>Period',
-            '5th<br>Period',
-            '6th<br>Period',
-            '7th<br>Period',
-            '8th<br>Period',
-            'Good<br>Bye',
-            'Study<br>Hall',
-        ];
-        // This is the prototype for the lunch display. I think the buildings
-        // are incorrectly placed so I need to make sure BEFORE IT IS PUBLISHED.
-        const lunch = [
-            'A Lunch: Main Bldg., 900s, Neff Hall',
-            'B Lunch: 800s, 1000s',
-            'Message of the Day:',
-            'Lunch: Review Rooms',
-            'Lunch: Testing Rooms',
-        ];
 
-        // These two arrays make up your school's typical bell schedule. "Bell"
-        // are the minutes of the day that each bell rings, "regularSchedule"
-        // are the periods your school has and their order
-        const bell = [0, 460, 556, 654, 782, 880];
-        const regularSchedule = [0, 1, 2, 3, 4, 5];
-
-        //These two arrays make up your school's luch schedule assuming there
-        //are two(or more) discrete lunches. If your school employs a rolling
-        //lunch schedule you might be able to make this work, but a totally
-        //different solution will most likely be required.
-        const regularLunchBell = [0, 654, 684, 752, 782];
-        const regularLunch = [2, 0, 2, 1, 2];
-
-        // The next four "specialX" objects are for days that deviate from your
-        // school's typical bell schedule, "specialDays" are the days of the
-        // school year that the special day occurs, "specialBell" are the
-        // altered times the bell will ring, and "specialSchedule" are the
-        // altered order of the periods. If you add a Special Day to these
-        // objects, make sure to add one to all three even if the bell or
-        // schedule order are not affected.
-        const specialDays = {
-            earlyRelease: [60, 130, 186, 213, 254, 295],
-            PSD: [24, 87, 178, 234],
-            testing: [],
-            examReverse: [],
-            examA: [],
-            examAReverse: [],
-            examB: [],
-            examLast: [],
-        };
-        const specialBell = {
-            earlyRelease: [0, 460, 528, 602, 676, 750],
-            PSD: [0, 460, 520, 586, 652, 718],
-            testing: [0, 460, 474, 760, 800, 840, 880],
-            examReverse: bell,
-            examA: [0, 460, 580, 710],
-            examAReverse: [0, 460, 580, 710],
-            examB: [0, 460, 580, 710],
-            examLast: [0, 460, 600, 750],
-        };
-        const specialSchedule = {
-            earlyRelease: regularSchedule,
-            PSD: regularSchedule,
-            testing: [0, 1, 7, 2, 3, 4, 5],
-            examReverse: [0, 4, 3, 2, 1, 5],
-            examA: [0, 1, 2, 5],
-            examAReverse: [0, 4, 3, 5],
-            examB: [0, 1, 2, 5],
-            examLast: [0, 4, 3, 5],
-        };
-        const specialLunchBell = {
-            earlyRelease: regularLunchBell,
-            PSD: regularLunchBell,
-            testing: [0, 660, 690, 730, 760],
-            examReverse: bell,
-            examA: regularLunchBell,
-            examAReverse: regularLunchBell,
-            examB: regularLunchBell,
-            examLast: regularLunchBell,
-        };
-        const specialLunch = {
-            earlyRelease: [2, 2, 2, 2, 2],
-            PSD: [2, 2, 2, 2, 2],
-            testing: [2, 3, 2, 4, 2],
-            examReverse: regularLunch,
-            examA: [2, 2, 2, 2, 2],
-            examAReverse: [2, 2, 2, 2, 2],
-            examB: [2, 2, 2, 2, 2],
-            examLast: [2, 2, 2, 2, 2],
-        };
-        // This is an array of the school year where calendar[0] is the first
-        // day of school, in my case (8-11-25).
-        const calendar = [
-            0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1,
-            0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 4, 0, 1,
-            0, 6, 6, 1, 0, 1, 4, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6,
-            6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0,
-            4, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 5, 5, 5, 5, 5, 6, 6, 1, 0, 1,
-            0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 3, 3, 3, 3, 6, 6, 7, 7, 7, 7, 7,
-            7, 7, 7, 7, 7, 7, 7, 6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-            4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0,
-            1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0,
-            1, 6, 6, 0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6, 0, 1, 0, 1, 0, 6,
-            6, 1, 0, 1, 0, 4, 6, 6, 4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0,
-            1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1,
-            0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 3, 6, 6, 3, 3, 3,
-        ];
-
-        // This function updates the HTML amd clears errors in the log when
-        // elements are undefined as a result of switching between school days
-        // and weekends
-        function updateHTML(elmId, value) {
-            let elem = document.getElementById(elmId);
-            if (typeof elem !== 'undefined' && elem !== null) {
-                elem.innerHTML = value;
-            }
-        }
-
-        function showNoSchoolOverlay(htmlMessage) {
-            const overlay = document.getElementById('noschoolOverlay');
-            const text = document.getElementById('noschoolText');
-            if (text) text.innerHTML = htmlMessage; // dayColor contains HTML (e.g., <b>A</b><br>Day)
-            if (overlay) overlay.style.display = 'flex';
-        }
-
-        function hideNoSchoolOverlay() {
-            const overlay = document.getElementById('noschoolOverlay');
-            if (overlay) overlay.style.display = 'none';
-        }
-
-        function updatePage() {
-            let today = new Date();
-
-            // This function returns the num. of days since the first day of
-            // school
-            function aOrB() {
-                // Change the date in quotes to your first day of school
-                let date1 = new Date('08/11/2025');
-                let date2 = today;
-
-                // Calculates the time difference of the two dates in minutes
-                let differenceInTime = date2.getTime() - date1.getTime();
-
-                // Converts minutes to days
-                let differenceInDays = Math.trunc(
-                    differenceInTime / (1000 * 3600 * 24),
-                );
-
-                return differenceInDays;
+        <style>
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
             }
 
-            const dayIndex = aOrB();
-
-            // Displays current day (A, B, Weekend, Holiday etc)
-            if (calendar[dayIndex] < 4) {
-                updateHTML('day', dayColor[calendar[dayIndex]]);
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #26457a;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                vertical-align: baseline;
             }
 
-            // This function loops through each array in the "specialDays"
-            // object and checks it against the "aOrB" function to see if it is
-            // currently a special day. If it is, it will return the modified
-            // bell and period schedule that matches the special day, if not it
-            // returns the regular ones
-            function isSpecial() {
-                for (let key in specialDays) {
-                    if (specialDays[key].includes(dayIndex)) {
-                        return [
-                            specialBell[key],
-                            specialSchedule[key],
-                            specialLunchBell[key],
-                            specialLunch[key],
-                        ];
-                    }
-                }
-                return [bell, regularSchedule, regularLunchBell, regularLunch];
+            /* Full-screen overlay for weekends/holidays/summer */
+            #noschoolOverlay {
+                position: fixed;
+                inset: 0; /* top/right/bottom/left: 0 */
+                width: 100vw;
+                height: 100vh;
+                background: #1e1e1e;
+                color: #f1f1f1;
+                display: none; /* hidden by default */
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 80px;
+                z-index: 9999; /* put it on top of other content */
             }
 
-            const scheduleBundle = isSpecial();
-
-            // This function takes outputed arrays from the "isSpecial" function
-            // and loops through them to return the correct period of the day
-            function bellSchedule(bellType, scheduleType) {
-                // Bell schedule (in minutes since midnight)
-                let minsToday = today.getMinutes() + today.getHours() * 60;
-                let currentPeriod = 0;
-                for (let i = 0; i < bellType.length; i++) {
-                    if (minsToday >= bellType[i]) {
-                        currentPeriod = scheduleType[i];
-                    }
-                }
-                return currentPeriod;
+            #noschoolOverlay b {
+                font-weight: 700;
             }
 
-            // Displays "Summer" message
-            if (dayIndex >= calendar.length) {
-                showNoSchoolOverlay('Enjoy Your Summer!');
-                return;
-                // Displays current period for A or B day
-            } else if (calendar[dayIndex] < 1) {
-                updateHTML(
-                    'period',
-                    classPeriodA[
-                        bellSchedule(scheduleBundle[0], scheduleBundle[1])
-                    ],
-                );
-            } else if (calendar[dayIndex] < 2) {
-                updateHTML(
-                    'period',
-                    classPeriodB[
-                        bellSchedule(scheduleBundle[0], scheduleBundle[1])
-                    ],
-                );
-            } else if (calendar[dayIndex] < 4) {
-                updateHTML(
-                    'period',
-                    classPeriodAB[
-                        bellSchedule(scheduleBundle[0], scheduleBundle[1])
-                    ],
-                );
-            } else {
-                let content = dayColor[calendar[dayIndex]];
-                showNoSchoolOverlay('Enjoy Your ' + content);
-                return;
+            /* Style the header */
+            .header {
+                color: #f1f1f1;
+                padding: 15px;
+                text-align: center;
+                font-size: 35px;
             }
 
-            hideNoSchoolOverlay();
-
-            //Displays current lunch
-            if (calendar[dayIndex] < 4) {
-                updateHTML(
-                    'lunch',
-                    lunch[bellSchedule(scheduleBundle[2], scheduleBundle[3])],
-                );
-            }
-
-            updateHTML('debug', today);
-        }
-
-        window.setInterval(updatePage, 1000);
-    </script>
-
-    <style>
-        * {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #26457a;
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font-size: 100%;
-            vertical-align: baseline;
-        }
-
-        /* Full-screen overlay for weekends/holidays/summer */
-        #noschoolOverlay {
-            position: fixed;
-            inset: 0; /* top/right/bottom/left: 0 */
-            width: 100vw;
-            height: 100vh;
-            background: #1e1e1e;
-            color: #f1f1f1;
-            display: none; /* hidden by default */
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 80px;
-            z-index: 9999; /* ensure it’s above everything */
-        }
-
-        #noschoolOverlay b {
-            font-weight: 700;
-        }
-
-        /* Style the header */
-        .header {
-            color: #f1f1f1;
-            padding: 15px;
-            text-align: center;
-            font-size: 35px;
-        }
-
-        /* Add a container to keep both columns an equal height regardless of
+            /* Add a container to keep both columns an equal height regardless of
         content*/
-        .container {
-            overflow: hidden;
-            width: 100%;
-        }
-
-        /* Create two equal columns that floats next to each other */
-        .column {
-            float: left;
-            width: 50%;
-            padding: 15px;
-            font-size: 45px;
-            padding-bottom: 500em;
-            margin-bottom: -500em;
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: '';
-            display: table;
-            clear: both;
-        }
-
-        /* Style the footer */
-        .footer1 {
-            background-color: #d6d6d6;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .footer2 {
-            background-color: #f1f1f1;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .footer3 {
-            color: #f1f1f1;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #lunch {
-            font-size: 45px;
-        }
-
-        #motd {
-            font-size: 25px;
-        }
-
-        .content {
-            text-align: center;
-            font-size: 90px;
-            width: 300px;
-            margin: auto;
-        }
-
-        /* Responsive layout - makes the two columns stack on top of each other
-instead of next to each other */
-        @media (max-width: 600px) {
-            .column {
+            .container {
+                overflow: hidden;
                 width: 100%;
             }
-        }
-    </style>
+
+            /* Create two equal columns that floats next to each other */
+            .column {
+                float: left;
+                width: 50%;
+                padding: 15px;
+                font-size: 45px;
+                padding-bottom: 500em;
+                margin-bottom: -500em;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+
+            /* Style the footer */
+            .footer1 {
+                background-color: #d6d6d6;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .footer2 {
+                background-color: #f1f1f1;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .footer3 {
+                color: #f1f1f1;
+                padding: 10px;
+                text-align: center;
+            }
+
+            #lunch {
+                font-size: 45px;
+            }
+
+            #motd {
+                font-size: 25px;
+            }
+
+            .content {
+                text-align: center;
+                font-size: 90px;
+                width: 300px;
+                margin: auto;
+            }
+
+            /* Responsive layout - makes the two columns stack on top of each other
+instead of next to each other */
+            @media (max-width: 600px) {
+                .column {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
     <body>
         <!-- Full-screen No School overlay (hidden by default) -->
         <div id="noschoolOverlay" aria-live="polite">
@@ -449,5 +169,310 @@ instead of next to each other */
         <div class="footer3">
             <p id="debug">Footer</p>
         </div>
+
+        <script>
+            // This array will be referenced by the "calendar" array, thus it is
+            // filled with the different types of days that the page will display
+            const dayColor = [
+                '<b>A</b><br>Day',
+                '<b>B</b><br>Day',
+                '<b>A/B</b><br> Day',
+                'Exam<br>Day',
+                'Day Off',
+                'Thanksgiving',
+                'Weekend',
+                'Winter Break',
+                'Spring Break',
+            ];
+            // These arrays cycle through the periods 1-4 on "A" days, 5-8 on "B"
+            // days. "Study Hall" is at the end because my school sends non-testing
+            // students to their study hall class during testing days
+            const classPeriodA = [
+                'Good<br>Morning',
+                '1st<br>Period',
+                '2nd<br>Period',
+                '3rd<br>Period',
+                '4th<br>Period',
+                'Good<br>Bye',
+                'Study<br>Hall',
+                'Testing',
+            ];
+            const classPeriodB = [
+                'Good<br>Morning',
+                '5th<br>Period',
+                '6th<br>Period',
+                '7th<br>Period',
+                '8th<br>Period',
+                'Good<br>Bye',
+                'Study<br>Hall',
+                'SAT<br>Testing',
+            ];
+            const classPeriodAB = [
+                'Good<br>Morning',
+                '1st<br>Period',
+                '2nd<br>Period',
+                '3rd<br>Period',
+                '4th<br>Period',
+                '5th<br>Period',
+                '6th<br>Period',
+                '7th<br>Period',
+                '8th<br>Period',
+                'Good<br>Bye',
+                'Study<br>Hall',
+            ];
+            // This holds the possible lunches that will be displayed on the page,
+            // if lunch isn't in session, the message of the day will be displayed
+            // instead.
+            const lunch = [
+                'A Lunch: Main Bldg., 900s, Neff Hall',
+                'B Lunch: 800s, 1000s',
+                'Message of the Day:',
+                'Lunch: Review Rooms',
+                'Lunch: Testing Rooms',
+            ];
+
+            // These two arrays make up your school's typical bell schedule. "Bell"
+            // are the minutes of the day that each bell rings, "regularSchedule"
+            // are the periods your school has and their order
+            const bell = [0, 460, 556, 654, 782, 880];
+            const regularSchedule = [0, 1, 2, 3, 4, 5];
+
+            //These two arrays make up your school's luch schedule assuming there
+            //are two(or more) discrete lunches. If your school employs a rolling
+            //lunch schedule you might be able to make this work, but a totally
+            //different solution will most likely be required.
+            const regularLunchBell = [0, 654, 684, 752, 782];
+            const regularLunch = [2, 0, 2, 1, 2];
+
+            // The next four "specialX" objects are for days that deviate from your
+            // school's typical bell schedule, "specialDays" are the days of the
+            // school year that the special day occurs, "specialBell" are the
+            // altered times the bell will ring, and "specialSchedule" are the
+            // altered order of the periods. If you add a Special Day to these
+            // objects, make sure to add one to all three even if the bell or
+            // schedule order are not affected.
+            const specialDays = {
+                earlyRelease: [60, 130, 186, 213, 254, 295],
+                PSD: [24, 87, 178, 234],
+                testing: [],
+                examReverse: [],
+                examA: [],
+                examAReverse: [],
+                examB: [],
+                examLast: [],
+            };
+            const specialBell = {
+                earlyRelease: [0, 460, 528, 602, 676, 750],
+                PSD: [0, 460, 520, 586, 652, 718],
+                testing: [0, 460, 474, 760, 800, 840, 880],
+                examReverse: bell,
+                examA: [0, 460, 580, 710],
+                examAReverse: [0, 460, 580, 710],
+                examB: [0, 460, 580, 710],
+                examLast: [0, 460, 600, 750],
+            };
+            const specialSchedule = {
+                earlyRelease: regularSchedule,
+                PSD: regularSchedule,
+                testing: [0, 1, 7, 2, 3, 4, 5],
+                examReverse: [0, 4, 3, 2, 1, 5],
+                examA: [0, 1, 2, 5],
+                examAReverse: [0, 4, 3, 5],
+                examB: [0, 1, 2, 5],
+                examLast: [0, 4, 3, 5],
+            };
+            const specialLunchBell = {
+                earlyRelease: regularLunchBell,
+                PSD: regularLunchBell,
+                testing: [0, 660, 690, 730, 760],
+                examReverse: bell,
+                examA: regularLunchBell,
+                examAReverse: regularLunchBell,
+                examB: regularLunchBell,
+                examLast: regularLunchBell,
+            };
+            const specialLunch = {
+                earlyRelease: [2, 2, 2, 2, 2],
+                PSD: [2, 2, 2, 2, 2],
+                testing: [2, 3, 2, 4, 2],
+                examReverse: regularLunch,
+                examA: [2, 2, 2, 2, 2],
+                examAReverse: [2, 2, 2, 2, 2],
+                examB: [2, 2, 2, 2, 2],
+                examLast: [2, 2, 2, 2, 2],
+            };
+            // This is an array of the school year where calendar[0] is the first
+            // day of school, in my case (8-11-25).
+            const calendar = [
+                0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 4, 0, 1, 0, 6, 6, 1, 0, 1, 4, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                4, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 0, 4, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                5, 5, 5, 5, 5, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 3, 3, 3, 3, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6,
+                4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 4, 6, 6, 4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 3, 6, 6,
+                3, 3, 3,
+            ];
+
+            // This function updates the HTML amd clears errors in the log when
+            // elements are undefined as a result of switching between school days
+            // and weekends
+            function updateHTML(elementID, value) {
+                let element = document.getElementById(elementID);
+                if (typeof element !== 'undefined' && element !== null) {
+                    element.innerHTML = value;
+                }
+            }
+
+            function showNoSchoolOverlay(htmlMessage) {
+                const overlay = document.getElementById('noschoolOverlay');
+                const text = document.getElementById('noschoolText');
+                if (text) text.innerHTML = htmlMessage; // dayColor contains HTML (e.g., <b>A</b><br>Day)
+                if (overlay) overlay.style.display = 'flex';
+            }
+
+            function hideNoSchoolOverlay() {
+                const overlay = document.getElementById('noschoolOverlay');
+                if (overlay) overlay.style.display = 'none';
+            }
+
+            // This function loops through each array in the "specialDays"
+            // object and checks it against the "daysSinceStart" function to see if it is
+            // currently a special day. If it is, it will return the modified
+            // bell and period schedule that matches the special day, if not it
+            // returns the regular ones
+            function isSpecial(dayIndex) {
+                for (let key in specialDays) {
+                    if (specialDays[key].includes(dayIndex)) {
+                        return [
+                            specialBell[key],
+                            specialSchedule[key],
+                            specialLunchBell[key],
+                            specialLunch[key],
+                        ];
+                    }
+                }
+                return [bell, regularSchedule, regularLunchBell, regularLunch];
+            }
+
+            // This function takes outputed arrays from the "isSpecial" function
+            // and loops through them to return the correct period of the day
+            function bellSchedule(minsToday, bellType, scheduleType) {
+                // Bell schedule (in minutes since midnight)
+                let currentPeriod = 0;
+                for (let i = 0; i < bellType.length; i++) {
+                    if (minsToday >= bellType[i]) {
+                        currentPeriod = scheduleType[i];
+                    }
+                }
+                return currentPeriod;
+            }
+
+            // This function returns the num. of days since the first day of
+            // school
+            function daysSinceStart(todaysDate) {
+                // Change the date in quotes to your first day of school
+                let date1 = new Date('08/11/2025');
+                let date2 = todaysDate;
+
+                // Calculates the time difference of the two dates in minutes
+                let differenceInTime = date2.getTime() - date1.getTime();
+
+                // Converts minutes to days
+                let differenceInDays = Math.trunc(
+                    differenceInTime / (1000 * 3600 * 24),
+                );
+
+                return differenceInDays;
+            }
+
+            function updatePage() {
+                const today = new Date();
+                const minsToday = today.getMinutes() + today.getHours() * 60;
+                const dayIndex = daysSinceStart(today);
+
+                if (dayIndex < 0) {
+                    showNoSchoolOverlay('School year has not started yet.');
+                    return;
+                }
+                if (dayIndex >= calendar.length) {
+                    showNoSchoolOverlay('Enjoy Your Summer!');
+                    return;
+                }
+
+                const dayCode = calendar[dayIndex];
+
+                if (dayCode >= 4) {
+                    let content = dayColor[dayCode];
+                    showNoSchoolOverlay('Enjoy Your ' + content);
+                    return;
+                }
+
+                hideNoSchoolOverlay();
+                const scheduleBundle = isSpecial(dayIndex);
+
+                // Displays current day and period
+                updateHTML('day', dayColor[dayCode]);
+
+                if (dayCode === 0) {
+                    updateHTML(
+                        'period',
+                        classPeriodA[
+                            bellSchedule(
+                                minsToday,
+                                scheduleBundle[0],
+                                scheduleBundle[1],
+                            )
+                        ],
+                    );
+                } else if (dayCode === 1) {
+                    updateHTML(
+                        'period',
+                        classPeriodB[
+                            bellSchedule(
+                                minsToday,
+                                scheduleBundle[0],
+                                scheduleBundle[1],
+                            )
+                        ],
+                    );
+                } else if (dayCode === 2) {
+                    updateHTML(
+                        'period',
+                        classPeriodAB[
+                            bellSchedule(
+                                minsToday,
+                                scheduleBundle[0],
+                                scheduleBundle[1],
+                            )
+                        ],
+                    );
+                }
+
+                //Display current lunch
+                updateHTML(
+                    'lunch',
+                    lunch[
+                        bellSchedule(
+                            minsToday,
+                            scheduleBundle[2],
+                            scheduleBundle[3],
+                        )
+                    ],
+                );
+
+                updateHTML('debug', today);
+            }
+
+            updatePage();
+            window.setInterval(updatePage, 1000);
+        </script>
     </body>
 </html>
