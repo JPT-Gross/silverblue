@@ -234,7 +234,7 @@ instead of next to each other */
             // These two arrays make up your school's typical bell schedule. "Bell"
             // are the minutes of the day that each bell rings, "regularSchedule"
             // are the periods your school has and their order
-            const bell = [0, 460, 556, 654, 782, 880];
+            const bell = [0, 460, 558, 654, 788, 880];
             const regularSchedule = [0, 1, 2, 3, 4, 5];
 
             //These two arrays make up your school's luch schedule assuming there
@@ -302,23 +302,22 @@ instead of next to each other */
                 examLast: [2, 2, 2, 2, 2],
             };
             // This is an array of the school year where calendar[0] is the first
-            // day of school, in my case (8-11-25).
+            // day of school, in my case (8-10-26).
             const calendar = [
                 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
                 4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                1, 4, 0, 1, 0, 6, 6, 1, 0, 1, 4, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
-                4, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                1, 0, 1, 0, 1, 6, 6, 0, 4, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                5, 5, 5, 5, 5, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                1, 3, 3, 3, 3, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6,
-                4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 0, 6, 6,
+                4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
                 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
-                4, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
-                0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                1, 0, 1, 0, 4, 6, 6, 4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                5, 5, 5, 5, 5, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                0, 3, 3, 3, 3, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6,
+                4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 4, 0, 1, 0, 1, 6, 6,
                 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
-                1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 4, 1, 0, 1, 3, 6, 6,
-                3, 3, 3,
+                4, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 4, 6, 6, 8, 8, 8, 8, 8, 6, 6,
+                0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6,
+                1, 0, 1, 0, 1, 6, 6, 0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6,
+                0, 1, 0, 1, 0, 6, 6, 1, 0, 1, 0, 1, 6, 6, 0, 3, 3, 3, 3,
             ];
 
             // This function updates the HTML amd clears errors in the log when
@@ -379,7 +378,7 @@ instead of next to each other */
             // school
             function daysSinceStart(todaysDate) {
                 // Change the date in quotes to your first day of school
-                let date1 = new Date('08/11/2025');
+                let date1 = new Date('08/10/2026');
                 let date2 = todaysDate;
 
                 // Calculates the time difference of the two dates in minutes
